@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "binary_tree.h"
+// #include "binary_tree.h"
 #include "stack_linked_list.h"
 #include "queue_linked_list.h"
 
-// typedef struct TreeNode
-// {
-//     int data;
-//     struct TreeNode *left, *right;
-// } TreeNode;
+typedef struct TreeNode
+{
+    int data;
+    struct TreeNode *left, *right;
+} TreeNode;
 
 void initTree(TreeNode **root, int data)
 {
@@ -101,7 +101,6 @@ void printLevel(TreeNode *root, int level)
         printLevel(root->right, level - 1);
     }
 }
-//TODO
 
 // void preorderIterative(TreeNode *root)
 // {
@@ -151,7 +150,8 @@ void printLevel(TreeNode *root, int level)
 //     }
 // }
 
-TreeNode *createTree()
+TreeNode *
+createTree()
 {
     int data;
     char decision;
@@ -187,12 +187,34 @@ void freeTree(TreeNode **root)
     }
 }
 
-// int main()
-// {
-//     TreeNode *root = createTree();
+void DRS(TreeNode *root, int k)
+{
+    if (root)
+    {
+        DRS(root->right, k);
+        if (root->data >= k)
+            printf("%d ", root->data);
+        DRS(root->left, k);
+    }
+}
 
-//     preorder(root);
+void DRS(TreeNode *root, int k)
+{
+    if (!root)
+        return;
+    DRS(root->right, k);
+    if (root->data >= k)
+        printf("%d ", root->data);
+    DRS(root->left, k);
+}
+int main()
+{
+    TreeNode *root = createTree();
+    // TreeNode *root = NULL;
 
-//     freeTree(&root);
-//     return 0;
-// }
+    // preorder(root);
+    DRS(root, 5);
+
+    freeTree(&root);
+    return 0;
+}
